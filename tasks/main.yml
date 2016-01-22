@@ -11,7 +11,7 @@
     - vim
 
 - name: Check to See if My dotfiles are already installed
-  stat: path=~/.local/etc/bashrc
+  stat: path=~/.kfieldho/etc/bashrc
   register: base_bashrc 
   changed_when: base_bashrc.stat.exists == False
 
@@ -21,7 +21,7 @@
   changed_when: base_vimrc.stat.exists == False
 
 - name: Local files                                                                                                                                
-  git: repo=https://github.com/kfieldho/localfiles.git dest=/home/vagrant/.local accept_hostkey=yes                                                
+  git: repo=https://github.com/kfieldho/localfiles.git dest=/home/vagrant/.kfieldho accept_hostkey=yes                                                
   when: base_bashrc.stat.exists == False
                                                                                                                                                  
 - name: Vim Config                                                                                                                                 
@@ -34,5 +34,5 @@
   changed_when: kfieldho_setup.stat.exists == False
                                                                                                                                                  
 - name: Configure My Account                                                                                                                       
-  command: /home/vagrant/.local/setup.sh   
+  command: /home/vagrant/.kfieldho/setup.sh   
   when: kfieldho_setup.stat.exists == False
