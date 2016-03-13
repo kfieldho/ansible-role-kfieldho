@@ -21,18 +21,18 @@
   changed_when: base_vimrc.stat.exists == False
 
 - name: Local files                                                                                                                                
-  git: repo=https://github.com/kfieldho/localfiles.git dest=/home/vagrant/.kfieldho accept_hostkey=yes                                                
+  git: repo=https://github.com/kfieldho/localfiles.git dest=~/.kfieldho accept_hostkey=yes                                                
   when: base_bashrc.stat.exists == False
                                                                                                                                                  
 - name: Vim Config                                                                                                                                 
-  git: repo=https://github.com/kfieldho/vimfiles.git dest=/home/vagrant/.vim accept_hostkey=yes                                                    
+  git: repo=https://github.com/kfieldho/vimfiles.git dest=~/.vim accept_hostkey=yes                                                    
   when: base_vimrc.stat.exists == False
 
 - name: Check to See if setup has been run
-  stat: path=~/.kfieldho
+  stat: path=~/.kfieldho/setup.sh
   register: kfieldho_setup
   changed_when: kfieldho_setup.stat.exists == False
                                                                                                                                                  
 - name: Configure My Account                                                                                                                       
-  command: /home/vagrant/.kfieldho/setup.sh   
-  when: kfieldho_setup.stat.exists == False
+  command: ~/.kfieldho/setup.sh   
+  when: kfieldho_setup.stat.exists == True
