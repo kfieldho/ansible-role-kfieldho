@@ -3,16 +3,16 @@
 
 
 - name: My Favorite Tools
-  sudo: True                                                                                                                                       
+  sudo: True
   apt: pkg={{ item }} state=installed update_cache=yes
-  with_items:                                                                                                                                      
+  with_items:
     - tmux
     - git
     - vim
 
 - name: Check to See if My dotfiles are already installed
   stat: path=~/.kfieldho/etc/bashrc
-  register: base_bashrc 
+  register: base_bashrc
   changed_when: base_bashrc.stat.exists == False
 
 - name: Check to See if My vimfiles are already installed
@@ -20,19 +20,19 @@
   register: base_vimrc
   changed_when: base_vimrc.stat.exists == False
 
-- name: Local files                                                                                                                                
-  git: repo=https://github.com/kfieldho/localfiles.git dest=~/.kfieldho accept_hostkey=yes                                                
+- name: Local files
+  git: repo=https://github.com/kfieldho/localfiles.git dest=~/.kfieldho accept_hostkey=yes
   when: base_bashrc.stat.exists == False
-                                                                                                                                                 
-- name: Vim Config                                                                                                                                 
-  git: repo=https://github.com/kfieldho/vimfiles.git dest=~/.vim accept_hostkey=yes                                                    
+
+- name: Vim Config
+  git: repo=https://github.com/kfieldho/vimfiles.git dest=~/.vim accept_hostkey=yes
   when: base_vimrc.stat.exists == False
 
 - name: Check to See if setup has been run
   stat: path=~/.kfieldho/setup.sh
   register: kfieldho_setup
   changed_when: kfieldho_setup.stat.exists == False
-                                                                                                                                                 
-- name: Configure My Account                                                                                                                       
-  command: ~/.kfieldho/setup.sh   
+
+- name: Configure My Account
+  command: ~/.kfieldho/setup.sh
   when: kfieldho_setup.stat.exists == True
