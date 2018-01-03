@@ -3,7 +3,8 @@
 
 
 - name: My Favorite Tools
-  sudo: True
+  become: True
+  become_user: root
   apt: pkg={{ item }} state=installed update_cache=yes
   with_items:
     - tmux
